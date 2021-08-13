@@ -5,7 +5,7 @@ const path = require('path');
 const uuid = require('uuid');
 const dbPath = path.join(__dirname, '..', 'Develop', 'db', 'db.json')
 
-function getNotes(){
+function getNotes() {
     return JSON.parse(fs.readFileSync(dbPath, 'utf-8')) || [];
 }
 
@@ -17,15 +17,15 @@ router.get("/api/notes", (req, res) => {
 router.post("/api/notes", (req, res) => {
     const notes = getNotes();
 
-    const title = req.body.title;   
+    const title = req.body.title;
     const text = req.body.text;
 
-    const noteID = uuid.v4();
+    const id = uuid.v4();
 
     notes.push({
         title,
         text,
-        noteID,
+        id,
     })
     fs.writeFileSync(dbPath, JSON.stringify(notes))
     res.json({
@@ -34,6 +34,17 @@ router.post("/api/notes", (req, res) => {
     console.log(notes)
 })
 
+router.delete('/api/notes/:id', (req, res) => {
+    const notes = getNotes();
+    const filter = notes.filter((note) => {
+        return note.id !== req.params.id
+    });
 
+    fs.writeFileSync(dbPath, JSON.stringify(filter));
+
+    res.json({
+        data: 'deleted'
+    });
+})
 
 module.exports = router;
