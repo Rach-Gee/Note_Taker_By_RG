@@ -3,7 +3,7 @@ const router = express.Router();
 const fs = require('fs')
 const path = require('path');
 const uuid = require('uuid');
-const dbPath = path.join(__dirname, '..', 'Develop', 'db', 'db.json')
+const dbPath = path.join(__dirname, '..', 'db', 'db.json')
 
 function getNotes() {
     return JSON.parse(fs.readFileSync(dbPath, 'utf-8')) || [];
