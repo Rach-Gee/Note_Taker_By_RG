@@ -12,13 +12,12 @@ app.use(express.json());
 app.use(webRouter);
 app.use(apiRouter);
 
-app.get("/*", (req, res) => {
+app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'Develop', 'public', 'index.html'));
 })
 
-
 app.listen(PORT, () => {
-    console.log('Now Listing on http://localhost:' + PORT)
+    console.log(`Now Listing on http://localhost:${PORT}`)
 })
 
 
